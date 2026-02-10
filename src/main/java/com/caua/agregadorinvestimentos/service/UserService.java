@@ -1,8 +1,12 @@
 package com.caua.agregadorinvestimentos.service;
 
 import com.caua.agregadorinvestimentos.controller.CreateUserDto;
+import com.caua.agregadorinvestimentos.entity.User;
 import com.caua.agregadorinvestimentos.repository.UserRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -15,5 +19,13 @@ public class UserService {
 
     public void createUser(CreateUserDto createUserDto) {
 
+       var entity = new User(UUID.randomUUID(),
+                createUserDto.username(),
+                createUserDto.email(),
+                createUserDto.password(),
+                Instant.now(),
+                null);
+
+        userRepository.save(entity);
     }
 }
