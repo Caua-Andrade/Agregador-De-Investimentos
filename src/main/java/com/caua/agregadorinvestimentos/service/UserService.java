@@ -6,6 +6,7 @@ import com.caua.agregadorinvestimentos.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -33,9 +34,9 @@ public class UserService {
         return userSaved.getUserId();
     }
 
-    public User getUserById(String userId) {
+    public Optional<User> getUserById(String userId) {
 
-        var user = userRepository.findById(UUID.fromString(userId));
+        return userRepository.findById(UUID.fromString(userId));
     }
 
 }
