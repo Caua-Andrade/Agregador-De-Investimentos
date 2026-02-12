@@ -19,15 +19,23 @@ public class UserService {
 
     public UUID createUser(CreateUserDto createUserDto) {
 
-       var entity = new User(UUID.randomUUID(),
+        var entity = new User(
+                null, // <-- MUITO IMPORTANTE
                 createUserDto.username(),
                 createUserDto.email(),
                 createUserDto.password(),
-                Instant.now(),
-                null);
+                null,
+                null
+        );
 
         var userSaved = userRepository.save(entity);
 
         return userSaved.getUserId();
     }
+
+    public User getUserById(String userId) {
+
+        var user = userRepository.findById(UUID.fromString(userId));
+    }
+
 }
