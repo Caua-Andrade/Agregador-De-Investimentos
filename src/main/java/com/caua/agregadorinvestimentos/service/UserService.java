@@ -1,11 +1,11 @@
 package com.caua.agregadorinvestimentos.service;
 
 import com.caua.agregadorinvestimentos.controller.CreateUserDto;
+import com.caua.agregadorinvestimentos.controller.UpdateUserDto;
 import com.caua.agregadorinvestimentos.entity.User;
 import com.caua.agregadorinvestimentos.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,6 +43,25 @@ public class UserService {
     //traz todos os users do banco de dados para a lista
     public List<User> listUsers() {
         return userRepository.findAll();
+    }
+
+    public void updateUserById(String userId, UpdateUserDto updateUserDto) {
+
+        var id = UUID.fromString(userId);
+
+        var userEntity = userRepository.findById(id);
+
+        if (userEntity.isPresent()) {
+            var user = userEntity.get();
+
+            if (updateUserDto.username() != null) {
+                user.setUsername(updateUserDto.username());
+            }
+
+            if (updateUserDto.password() != null) {
+                user.setPassword(updateUserDto.password());
+            }
+        }
     }
 
     public void deleteById(String userId) {
